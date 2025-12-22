@@ -1,8 +1,78 @@
-Dynamic programming is a technique where solutions to subproblems are stored in memory and used to quickly find the solution to the full problem.
+# Longest Common Substring Using Dynamic Programming  
+Dynamic programming is a technique where solutions to smaller subproblems are stored and reused to efficiently solve a larger problem. The **Longest Common Substring (LCS)** problem is a classic example where dynamic programming provides a major performance improvement.
 
-The longest common substring problem is solved efficiently using dynamic programming. A matrix, a list of lists, stores the length of the longest common substring found in two strings as the strings' characters are examined. Matrix element (i, j) is assigned with zero if the first string's ith character doesn't match the second string's jth character. If the two characters do match, then matrix element (i, j) is assigned with the matrix element (i-1, j-1) +1.
+---
 
-Note that string slices in Python use the syntax str1[ start_index : end_index + 1 ] to get the substring from start_index up to and including end_index.
+## How the Dynamic Programming Approach Works
 
-As the matrix fills in, only the previous row is needed to fill the current row. Thus, the only space required is two rows, plus the variables for the length and row of the longest substring found so far. In fact, once a value is used as an up_left value, the row element can be overwritten as part of the current row. Thus, only a single row is truly needed — the values before the current column are the current row's values, while values after the current column are the previous row's values. Ex: The current column is index 4 with the following row. The indices 0 - 3 (colored green) are from the current row, and indices 4 - 8 (colored red) are from the previous row.
+To find the longest common substring between two strings, we build a **matrix** (a list of lists in Python).  
+Each cell `(i, j)` in the matrix represents:
 
+> The length of the longest common substring **ending at**  
+> `str1[i]` and `str2[j]`.
+
+### Filling the Matrix
+
+For each pair of characters:
+
+- If `str1[i] != str2[j]`  
+  → `matrix[i][j] = 0`  
+  (because a substring cannot continue)
+
+- If `str1[i] == str2[j]`  
+  → `matrix[i][j] = matrix[i-1][j-1] + 1`  
+  (extend the previous matching substring)
+
+As we fill the matrix, we track:
+
+- The **maximum length** found so far  
+- The **ending index** of that substring in either string  
+
+Once the matrix is complete, we can extract the substring using Python slicing:
+
+```python
+substring = str1[start_index : end_index + 1]
+```
+
+---
+
+## Space Optimization
+
+A full matrix requires `O(n × m)` space, but we can do better.
+
+### Key Insight  
+To compute the value at `(i, j)`, we only need:
+
+- The **current row**  
+- The **previous row**  
+- The **up-left** value `(i-1, j-1)`
+
+This means:
+
+- Only **two rows** are needed at any time  
+- And with careful overwriting, even **one row** is enough
+
+### How the Single-Row Optimization Works
+
+Imagine we are filling row `i`:
+
+- Columns **before** the current column `j`  
+  → already updated (current row values)
+
+- Columns **after** column `j`  
+  → still hold values from the previous row
+
+So one list can act as both:
+
+- The current row (left side)  
+- The previous row (right side)
+
+This reduces memory usage from `O(n × m)` to **O(min(n, m))**.
+
+---
+
+## Why This Matters
+
+- Dynamic programming transforms a slow brute‑force solution into an efficient one.  
+- The longest common substring problem becomes solvable in **O(n × m)** time with **O(m)** space.  
+- The space‑optimized version is especially useful for large strings, where a full matrix would be too large to store.
