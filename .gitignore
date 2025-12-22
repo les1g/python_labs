@@ -4,3 +4,5 @@
 # Ignore PyCharm IDE files
 .idea/
 
+# py cache files
+_pycache__/
