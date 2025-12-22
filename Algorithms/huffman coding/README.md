@@ -1,31 +1,108 @@
-# Why Huffman Coding Is Useful
+# Huffman Coding & Lossless Text Compression
 
-Huffman coding is a foundational technique in lossless data compression. It reduces the number of bits needed to represent data by assigning shorter codes to frequent characters and longer codes to rare ones.
+## Purpose of This Module
 
-### Key Benefits
+This module demonstrates how **Huffman coding** compresses text by assigning shorter bit patterns to frequent characters and longer patterns to rare ones. It provides a complete, working implementation of:
 
-- **Lossless compression:**  
-  Huffman coding preserves all original information. The compressed data can always be perfectly reconstructed.
+- Building a frequency table  
+- Constructing a Huffman tree  
+- Generating prefix‑free binary codes  
+- Compressing text into a bitstring  
+- Decompressing the bitstring back to the original text  
 
-- **Efficient storage:**  
-  By using shorter bit patterns for common symbols, it reduces the average number of bits per character, improving compression efficiency.
+The included demonstration shows the full compression cycle using the string `"BANANAS"`.
 
-- **Prefix-free codes:**  
-  No code is the prefix of another. This ensures that decoding is fast, unambiguous, and does not require lookahead.
+## What Is Huffman Coding?
 
-- **Optimality:**  
-  For a given set of symbol frequencies, Huffman coding produces the most efficient variable‑length prefix code possible.
+Huffman coding is a **lossless compression algorithm** that reduces file size by using variable‑length binary codes:
 
-# Trade-offs and Limitations
+- Characters that appear often receive **shorter codes**  
+- Characters that appear rarely receive **longer codes**  
 
-While Huffman coding is powerful, it is not always the best choice for every scenario.
+This ensures the total number of bits used is minimized.
 
-- **Dictionary overhead:**  
-  The Huffman tree or code table must be stored alongside the compressed data. For small inputs, this overhead can outweigh the benefits.
+Huffman coding is widely used in:
 
-- **Best for large data:**  
-  Compression becomes more effective as the dataset grows. Small files may not compress well.
+- ZIP and GZIP compression  
+- JPEG image encoding  
+- Network protocols  
+- Text and data compression systems  
 
-- **Frequency-dependent:**  
-  Huffman coding works best when some symbols appear significantly more often than others.  
-  If all symbols occur with similar frequency, compression gains are minimal.
+## Why Huffman Coding Works
+
+Compression is effective because real text is not random. Some characters appear far more frequently than others.
+
+Huffman coding takes advantage of this by:
+
+1. Counting character frequencies  
+2. Building a binary tree where frequent characters are closer to the root  
+3. Assigning shorter codes to those frequent characters  
+4. Ensuring all codes are **prefix‑free** (no code is the prefix of another)
+
+Prefix‑free codes guarantee that the compressed bitstream can be decoded unambiguously.
+
+## How the Algorithm Works
+
+### 1. Build a Frequency Table  
+Count how many times each character appears in the input string.
+
+### 2. Build the Huffman Tree  
+Use a min‑heap to repeatedly combine the two least‑frequent nodes into a binary tree.
+
+### 3. Generate Codes  
+Traverse the tree:
+
+- Left branch = 0  
+- Right branch = 1  
+
+Leaf nodes receive their final binary codes.
+
+### 4. Compress  
+Replace each character in the input with its binary code to form a compressed bitstring.
+
+### 5. Decompress  
+Walk the tree bit‑by‑bit to reconstruct the original text.
+
+This process is guaranteed to be lossless.
+
+## Program Structure
+
+### Node Class  
+Represents a node in the Huffman tree:
+
+- `freq`: frequency of the character  
+- `char`: character stored in leaf nodes  
+- `left`, `right`: child nodes  
+
+Implements `__lt__` so nodes can be compared inside a min‑heap.
+
+### Frequency Table  
+`build_frequency_table()` returns a dictionary mapping characters to counts.
+
+### Huffman Tree Builder  
+`build_huffman_tree()` constructs the binary tree using a priority queue.
+
+### Code Generator  
+`get_codes()` recursively assigns binary codes to each character.
+
+### Compressor  
+`huffman_compress()` returns:
+
+- The compressed bitstring  
+- The Huffman tree root  
+- The dictionary of character codes  
+
+### Decompressor  
+`huffman_decompress()` walks the tree to rebuild the original string.
+
+## Summary
+
+This module provides a complete, working implementation of Huffman coding and demonstrates:
+
+- How frequency drives compression  
+- How the Huffman tree produces optimal prefix‑free codes  
+- How text is compressed into a bitstring  
+- How decompression restores the exact original text  
+
+Understanding Huffman coding builds a foundation for studying more advanced compression algorithms and data‑encoding techniques.
+
