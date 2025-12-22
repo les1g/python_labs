@@ -5,6 +5,6 @@
 .idea/
 
 # py cache files
-*__pycache__/
+*__pycache__
 *.pyc
-__pycache__/
+__pycache__
