@@ -1,12 +1,31 @@
-Why Huffman Coding Is Useful
+# Why Huffman Coding Is Useful
 
-- **Lossless compression:** Huffman coding doesn’t throw away any data — the original can be perfectly reconstructed.
-- **Efficient storage:** By giving shorter codes to frequent characters and longer codes to rare ones, it minimizes the average number of bits per symbol.
-- **Prefix-free codes:** No code is the prefix of another, so decoding is unambiguous and fast.
-- **Optimality:** For a given set of character frequencies, Huffman coding produces the most efficient variable-length code possible.
+Huffman coding is a foundational technique in lossless data compression. It reduces the number of bits needed to represent data by assigning shorter codes to frequent characters and longer codes to rare ones.
 
-Trade-offs and Limitations
+### Key Benefits
 
-- **Dictionary overhead:** You must store the Huffman tree or code table along with compressed data, which adds a small cost.
-- **Best for large data:** On very small files, the overhead may outweigh the savings.
-- **Frequency-dependent:** Works best when some symbols occur much more often than others. If all symbols are equally frequent, Huffman coding doesn’t help much.
+- **Lossless compression:**  
+  Huffman coding preserves all original information. The compressed data can always be perfectly reconstructed.
+
+- **Efficient storage:**  
+  By using shorter bit patterns for common symbols, it reduces the average number of bits per character, improving compression efficiency.
+
+- **Prefix-free codes:**  
+  No code is the prefix of another. This ensures that decoding is fast, unambiguous, and does not require lookahead.
+
+- **Optimality:**  
+  For a given set of symbol frequencies, Huffman coding produces the most efficient variable‑length prefix code possible.
+
+# Trade-offs and Limitations
+
+While Huffman coding is powerful, it is not always the best choice for every scenario.
+
+- **Dictionary overhead:**  
+  The Huffman tree or code table must be stored alongside the compressed data. For small inputs, this overhead can outweigh the benefits.
+
+- **Best for large data:**  
+  Compression becomes more effective as the dataset grows. Small files may not compress well.
+
+- **Frequency-dependent:**  
+  Huffman coding works best when some symbols appear significantly more often than others.  
+  If all symbols occur with similar frequency, compression gains are minimal.

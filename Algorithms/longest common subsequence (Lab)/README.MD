@@ -85,5 +85,5 @@ This lab teaches you:
   - Text similarity  
   - Version control systems  
 
-It reinforces that **correct output is not enough** — the grader checks whether you implemented the **correct DP logic**, not whether you hard‑coded answers.
+It reinforces that **correct output is not enough**: the grader checks whether you implemented the **correct DP logic**, not whether you hard‑coded answers.
 

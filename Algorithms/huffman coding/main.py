@@ -1,86 +1,61 @@
-import heapq
-from collections import defaultdict
-
-# Node classes
-class Node:
-    def __init__(self, freq, char=None, left=None, right=None):
-        self.freq = freq
-        self.char = char
-        self.left = left
-        self.right = right
-
-    # Needed for priority queue (min-heap)
-    def __lt__(self, other):
-        return self.freq < other.freq
-
-
-# Step 1: Build character frequency table
-def build_frequency_table(input_string):
-    table = defaultdict(int)
-    for ch in input_string:
-        table[ch] += 1
-    return dict(table)
-
-
-# Step 2: Build Huffman Tree
-def build_huffman_tree(input_string):
-    freq_table = build_frequency_table(input_string)
-    heap = []
-
-    # Create leaf nodes
-    for char, freq in freq_table.items():
-        heapq.heappush(heap, Node(freq, char))
-
-    # Build tree
-    while len(heap) > 1:
-        left = heapq.heappop(heap)
-        right = heapq.heappop(heap)
-        parent = Node(left.freq + right.freq, None, left, right)
-        heapq.heappush(heap, parent)
-
-    return heap[0]  # Root node
-
-
-# Step 3: Generate Huffman Codes
-def get_codes(node, prefix="", code_map=None):
-    if code_map is None:
-        code_map = {}
-
-    if node.char is not None:  # Leaf node
-        code_map[node.char] = prefix
-    else:
-        get_codes(node.left, prefix + "0", code_map)
-        get_codes(node.right, prefix + "1", code_map)
-
-    return code_map
-
-
-# Step 4: Compress string
-def huffman_compress(input_string):
-    root = build_huffman_tree(input_string)
-    codes = get_codes(root)
-    compressed = "".join(codes[ch] for ch in input_string)
-    return compressed, root, codes
-
-
-# Step 5: Decompress string
-def huffman_decompress(compressed_string, root):
-    result = []
-    node = root
-    for bit in compressed_string:
-        node = node.left if bit == "0" else node.right
-        if node.char is not None:  # Leaf
-            result.append(node.char)
-            node = root
-    return "".join(result)
-
+from huffman_functions import huffman_compress, huffman_decompress
 
 # Example usage
 if __name__ == "__main__":
+    print("\n=== HUFFMAN COMPRESSION DEMONSTRATION ===")
+    print("This module demonstrates how Huffman coding compresses text by assigning")
+    print("shorter bit patterns to frequent characters and longer patterns to rare ones.\n")
+
+    print("How Huffman Compression Works:")
+    print("- Count how often each character appears.")
+    print("- Build a binary tree where frequent characters are closer to the root.")
+    print("- Assign shorter binary codes to frequent characters.")
+    print("- Assign longer binary codes to rare characters.")
+    print("Why this is important:")
+    print("- Produces optimal prefix-free codes.")
+    print("- Reduces file size without losing information.")
+    print("- Forms the basis of many real-world compression algorithms.\n")
+
+    # ---------------------------------------------------------
+    # Demonstration
+    # ---------------------------------------------------------
     text = "BANANAS"
+
+    print("===============================================")
+    print("Original text:", text)
+    print("Compressing using Huffman coding...\n")
+
     compressed, root, codes = huffman_compress(text)
 
-    print("Original:", text)
-    print("Codes:", codes)
-    print("Compressed:", compressed)
-    print("Decompressed:", huffman_decompress(compressed, root))
+    print("Character Codes (Huffman Tree Output):")
+    for char, code in codes.items():
+        print(f"  '{char}': {code}")
+
+    print("\nCompressed bitstring:")
+    print(compressed)
+
+    print("\nDecompressing...")
+    decompressed = huffman_decompress(compressed, root)
+
+    print("Decompressed text:", decompressed)
+
+    # ---------------------------------------------------------
+    # Summary
+    # ---------------------------------------------------------
+    print("\n===============================================")
+    print("SUMMARY: WHY HUFFMAN CODING MATTERS")
+    print("-----------------------------------------------")
+    print("Huffman coding is useful when:")
+    print("- You want lossless compression.")
+    print("- Some characters appear more frequently than others.")
+    print("- You need efficient encoding for text or data streams.")
+
+    print("\nHuffman coding is NOT ideal when:")
+    print("- All characters appear with equal frequency.")
+    print("- You need random access to encoded data.")
+    print("- You require extremely fast encoding/decoding.")
+
+    print("\nThis example shows how Huffman coding:")
+    print("- Compresses data by using variable-length codes.")
+    print("- Guarantees no code is a prefix of another (prefix-free).")
+    print("- Always decompresses back to the exact original text.")

@@ -28,17 +28,3 @@ class LinkedList:
             self.tail = new_node
 
         self.length += 1
-
-# Example usage:
-if __name__ == "__main__":
-    linked_list = LinkedList()
-    print("Appending values to linked list:")
-    for value in [5, 10, 15]:
-        linked_list.append(value)
-        print(f"Appended {value}, list length: {linked_list.length}")
-    print("Final linked list:")
-    current = linked_list.head
-    while current:
-        print(current.value, end=" -> " if current.next else "")
-        current = current.next
-    print()

@@ -1,3 +1,0 @@
-A heuristic algorithm is an algorithm that quickly determines a near optimal or approximate solution. Such an algorithm can be designed to solve the 0-1 knapsack problem: The knapsack problem with the quantity of each item limited to 1.
-
-A heuristic algorithm to solve the 0-1 knapsack problem can choose to always take the most valuable item that fits in the knapsack's remaining space. Such an algorithm uses the heuristic of choosing the highest value item, without considering the impact on the remaining choices. While the algorithm's simple choices are aimed at optimizing the total value, the final result may not be optimal.
