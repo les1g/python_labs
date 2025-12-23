@@ -51,7 +51,7 @@ def list_remove(llist, value): # Removes the first node with the specified value
     prev = llist.head
     curr = llist.head.next
 
-    while curr is not None:
+    while curr is not None: # Traverse the list to find the node to remove
         if curr.data == value:
             prev.next = curr.next
             if curr == llist.tail:
@@ -67,3 +67,36 @@ def print_list(llist): # Prints the elements of the singly linked list
         items.append(str(curr.data))
         curr = curr.next
     print(" → ".join(items) if items else "(empty list)")
+
+def find_next_node(llist, value):
+    current_node = llist.head
+    while current_node is not None:
+        if current_node.data == value:
+            return current_node
+        current_node = current_node.next
+    return None
+
+def remove_node_after(llist, current_node):
+
+    # Case 1: Remove head node if curNode is None
+    if current_node is None:
+        if llist.head is None:
+            return  # empty list
+
+        sucNode = llist.head.next
+        llist.head = sucNode
+
+        if sucNode is None:  # list became empty
+            llist.tail = None
+        return
+
+    # Case 2: Remove node after curNode
+    if current_node.next is not None:
+        node_to_remove = current_node.next
+        sucNode = node_to_remove.next
+        current_node.next = sucNode
+
+        if sucNode is None:  # removed tail
+            llist.tail = current_node
+
+    
