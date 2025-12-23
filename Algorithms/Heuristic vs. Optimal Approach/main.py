@@ -1,11 +1,12 @@
-from greedy_knapsack import greedy_knapsack
-from optimized_Knapsack import optimal_knapsack
+from heuristic_Knapsack import greedy_knapsack
+from optimal_Knapsack import optimal_knapsack
 
 if __name__ == "__main__":
 
     print("\n================ EXAMPLE 1: Greedy is GOOD =================\n")
 
     # Greedy-friendly dataset
+    # Here, the highest-value items also form the optimal set
     items = [
         {"weight": 6, "value": 25},
         {"weight": 8, "value": 42},
@@ -33,6 +34,7 @@ if __name__ == "__main__":
     print("\n================ EXAMPLE 2: Greedy FAILS =================\n")
 
     # Dataset where greedy fails
+    # Here, taking the highest-value item first is suboptimal
     items = [
         {"weight": 25, "value": 100},
         {"weight": 24, "value": 99},
@@ -58,6 +60,7 @@ if __name__ == "__main__":
     print("\n================ EXAMPLE 3: When to Use Each =================\n")
 
     # Larger dataset to show performance difference
+    # Here, both algorithms give reasonable answers
     items = [
         {"weight": 10, "value": 60},
         {"weight": 20, "value": 100},
@@ -86,3 +89,8 @@ if __name__ == "__main__":
     print(" - Accuracy matters")
     print(" - You cannot afford to miss the best combination")
     print(" - The dataset is small enough for DP to run efficiently\n")
+
+    # Summary
+    print(("================ SUMMARY =================\n"))
+    print("In summary, use Greedy for speed and simplicity when approximate solutions are acceptable.")
+    print("Use Optimal (Dynamic Programming) when accuracy is critical and you can afford the computation time.\n")

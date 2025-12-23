@@ -1,16 +1,18 @@
 def optimal_knapsack(items, capacity):
     """
-    Optimal 0-1 Knapsack using Dynamic Programming.
+    0-1 Knapsack Problem using Dynamic Programming optimal strategy/solution.
+    The algorithm finds the best combination of items to maximize value.
     items = list of dicts: {"weight": w, "value": v}
     capacity = max weight allowed
     """
 
     n = len(items)
 
-    # DP table: (n+1) x (capacity+1)
+    # Dynamic programming table: (n+1) x (capacity+1)
+    # This table will hold the maximum value for each subproblem
     dp = [[0] * (capacity + 1) for _ in range(n + 1)]
 
-    # Build DP table
+    # Build Dynamic programming table
     for i in range(1, n + 1):
         weight = items[i - 1]["weight"]
         value = items[i - 1]["value"]
@@ -26,11 +28,12 @@ def optimal_knapsack(items, capacity):
                 dp[i][w] = dp[i - 1][w]
 
     # Backtrack to find chosen items
+    # This part reconstructs the items included in the optimal solution
     chosen_items = []
     w = capacity
 
     for i in range(n, 0, -1):
-        if dp[i][w] != dp[i - 1][w]:  # Item was taken
+        if dp[i][w] != dp[i - 1][w]:  # item was taken
             chosen_items.append(items[i - 1])
             w -= items[i - 1]["weight"]
 
