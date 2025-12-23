@@ -53,4 +53,7 @@ class LCSMatrix:
                     results.update(backtrack(i, j - 1, current))
                 return results
     
+        if self.matrix[self.row_count][self.column_count] == 0:
+            return set()
+        
         return backtrack(self.row_count, self.column_count, "")
