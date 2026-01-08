@@ -16,16 +16,23 @@ class GroceryList:
         self.undo_stack.push(RemoveLastCommand(self.list_items))
 
     def remove_at_with_undo(self, removal_index):
-        # Type your code here.
-        pass
+        # remove at given index from list_items
+        self.list_items.pop(removal_index)
+
+        # create an InsertAtCommand to undo the removal
+        self.undo_stack.push(InsertAtCommand(self.list_items, removal_index, self.list_items[removal_index]))
 
     def swap_with_undo(self, index1, index2):
-        # Type your code here.
-        pass
+        # swap the items at index1 and index2 in list_items
+        self.list_items[index1], self.list_items[index2] = self.list_items[index2], self.list_items[index1]
+        # create a SwapCommand to undo the swap
+        self.undo_stack.push(SwapCommand(self.list_items, index1, index2))
 
     def execute_undo(self):
-        # Type your code here.
-        pass
+        # call execute on the top command in the undo stack
+        if self.undo_stack.size() > 0:
+            undo_command = self.undo_stack.pop()
+            undo_command.execute()
 
     def get_list_size(self):
        return len(self.list_items)

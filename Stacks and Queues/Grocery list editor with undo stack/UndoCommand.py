@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-class UndoCommand(ABC):
+class UndoCommand(ABC): 
     
     @abstractmethod
     def execute(self):

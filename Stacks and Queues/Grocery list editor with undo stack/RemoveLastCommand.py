@@ -7,4 +7,8 @@ class RemoveLastCommand(UndoCommand):
 
     def execute(self):
         # Type your code here.
-        pass
+        self.removed_item = self.source_list.pop()
+    def undo(self):
+        # Type your code here.
+        self.source_list.append(self.removed_item)
+        return True
